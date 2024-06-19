@@ -3,201 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz</title>
-  <link rel="stylesheet" href="output.css">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="output.css" />
   </head>
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="max-w-md w-full bg-white p-6 rounded-md shadow-md">
-      <form id="quiz-form">
-        <label for="level" class="block mt-4 text-sm font-medium text-gray-700">
-          <span class="font-bold">Select level</span>
-          <select
-            id="level"
-            class="block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+  <body>
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-md p-6">
+      <h2 class="text-2xl font-bold mb-4">Register</h2>
+      <form id="registerForm">
+        <div class="mb-4">
+          <label for="registerName" class="block text-gray-700">Name</label>
+          <input
+            type="text"
+            id="registerName"
+            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="registerUsername" class="block text-gray-700"
+            >email</label
           >
-            <option disabled selected>Select level</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </label>
-        <label
-          for="category"
-          class="block mt-4 text-sm font-medium text-gray-700"
-        >
-          <span class="font-bold">Select category</span>
-          <select
-            id="category"
-            class="block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          <input
+            type="text"
+            id="registerEmail"
+            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="registerPassword" class="block text-gray-700"
+            >Password</label
           >
-            <option disabled selected>Select category</option>
-            <option value="General">General</option>
-            <option value="Science">Science</option>
-            <option value="History">History</option>
-          </select>
-        </label>
-        <div id="questions-container">
-          <div class="questions">
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              <span class="font-bold">Write Question</span>
-              <textarea
-                class="question block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                rows="4"
-                placeholder="Write Question..."
-              ></textarea>
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-1
-              <input
-                type="text"
-                class="option1 block w-full h-10 mt-1 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-2
-              <input
-                type="text"
-                class="option2 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-3
-              <input
-                type="text"
-                class="option3 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-4
-              <input
-                type="text"
-                class="option4 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Answer
-              <input
-                type="text"
-                class="answer block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-          </div>
+          <input
+            type="password"
+            id="registerPassword"
+            class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none"
+          />
         </div>
         <button
-          type="button"
-          id="add-question-btn"
-          class="mt-4 border border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          type="submit"
+          id="submitSignUp"
+          class="bg-blue-500 text-white px-4 py-2 rounded-md"
         >
-          Add Question
+          Register
         </button>
-        <button
-          type="button"
-          id="save-btn"
-          class="mt-4 border border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Save Questions
-        </button>
+        <p id="registerMessage" class="messageDiv mt-4 text-red-500"></p>
       </form>
-      <h2
-        class="message font-bold text-green-500 text-2xl text-center mt-5"
-      ></h2>
     </div>
 
-    <script>
-      document
-        .getElementById("add-question-btn")
-        .addEventListener("click", function () {
-          const newQuestionDiv = document.createElement("div");
-          newQuestionDiv.className = "questions mt-4";
-          newQuestionDiv.innerHTML = `
-      <label class="block text-sm font-medium text-gray-700">
-        <span class="font-bold">Write Question</span>
-        <textarea class="question block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="4" placeholder="Write Question..."></textarea>
-      </label>
-      <label class="block mt-4 text-sm font-medium text-gray-700">
-        Option-1
-        <input type="text" class="option1 block w-full h-10 mt-1 border border-gray-300 rounded-md shadow-sm">
-      </label>
-      <label class="block mt-4 text-sm font-medium text-gray-700">
-        Option-2
-        <input type="text" class="option2 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-      </label>
-      <label class="block mt-4 text-sm font-medium text-gray-700">
-        Option-3
-        <input type="text" class="option3 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-      </label>
-      <label class="block mt-4 text-sm font-medium text-gray-700">
-        Option-4
-        <input type="text" class="option4 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-      </label>
-      <label class="block mt-4 text-sm font-medium text-gray-700">
-        Answer
-        <input type="text" class="answer block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-      </label>
-    `;
-          document
-            .getElementById("questions-container")
-            .appendChild(newQuestionDiv);
-        });
-
-      document
-        .getElementById("save-btn")
-        .addEventListener("click", async function () {
-          const questionsDivs = document.querySelectorAll(".questions");
-          const questions = [];
-          const level = document.getElementById("level").value;
-          const category = document.getElementById("category").value;
-          const message = document.querySelector(".message");
-
-          questionsDivs.forEach((div) => {
-            const questionText = div.querySelector(".question").value;
-            const option1 = div.querySelector(".option1").value;
-            const option2 = div.querySelector(".option2").value;
-            const option3 = div.querySelector(".option3").value;
-            const option4 = div.querySelector(".option4").value;
-            const answer = div.querySelector(".answer").value;
-
-            const question = {
-              que: questionText,
-              options: [option1, option2, option3, option4],
-              answer: answer,
-              category: category,
-            };
-
-            questions.push(question);
-          });
-
-          try {
-            const response = await fetch(
-              "http://localhost:3000/questions/addQuestions",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  difficultyLevel: level,
-                  questions: questions,
-                }),
-              }
-            );
-            // }
-            if (!response.ok) {
-              console.log(
-                "Failed to save questions"
-              ); 
-              message.innerHTML = "Failed to save questions";
-              return;
-            }
-
-            const data = await response.json();
-            console.log("Response", data);
-            message.innerHTML = "Questions saved successfully!";
-          } catch (error) {
-            console.error("Error:", error);
-            message.innerHTML = error.message || "Error saving questions";
-          }
-        });
-    </script>
+   
+   <script  type="module" src="register.js"></script>
   </body>
 </html>

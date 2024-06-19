@@ -1,0 +1,122 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+  <link rel="stylesheet" href="output.css">
+  </head>
+  <body>
+
+
+     <div class="border-2 border-slate-200 rounded w-[15rem] p-2 m-5">
+    <h2 class="font-medium" >User Name: <span id="loggedUserName" class="font-light"></span></h2>
+    <p class="font-medium">User Email: <span id="loggedUserEmail" class="font-light"></span></p>
+    <button id="logout" class="bg-blue-500 text-white px-4 py-[4px] mt-3 rounded-md">Logout</button>
+  </div>
+    <div class="flex justify-center items-center">
+
+    <div class="w-[40rem] bg-white p-6 rounded-md shadow-md">
+      <form id="quiz-form">
+        <label for="level" class="block mt-4 text-sm font-medium text-gray-700">
+          <span class="font-bold">Select level</span>
+          <select
+            id="level"
+            class="block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+            <option disabled selected>Select level</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+        <label
+          for="category"
+          class="block mt-4 text-sm font-medium text-gray-700"
+        >
+          <span class="font-bold">Select category</span>
+          <select
+            id="category"
+            class="block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+            <option disabled selected>Select category</option>
+            <option value="Sports">Sports</option>
+            <option value="Movies">Movies</option>
+            <option value="General">General</option>
+          </select>
+        </label>
+        <div id="questions-container">
+          <div class="questions">
+            <label class="block mt-4 text-sm font-medium text-gray-700">
+              <span class="font-bold">Write Question</span>
+              <textarea
+                class="question block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                rows="4"
+                placeholder="Write Question..."
+              ></textarea>
+            </label>
+            <label class="block mt-4 text-sm font-medium text-gray-700">
+              Option-1
+              <input
+                type="text"
+                class="option1 block w-full h-10 mt-1 border border-gray-300 rounded-md shadow-sm"
+              />
+            </label>
+            <label class="block mt-4 text-sm font-medium text-gray-700">
+              Option-2
+              <input
+                type="text"
+                class="option2 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
+              />
+            </label>
+            <label class="block mt-4 text-sm font-medium text-gray-700">
+              Option-3
+              <input
+                type="text"
+                class="option3 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
+              />
+            </label>
+            <label class="block mt-4 text-sm font-medium text-gray-700">
+              Option-4
+              <input
+                type="text"
+                class="option4 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
+              />
+            </label>
+            <label class="block mt-4 text-sm font-medium text-gray-700">
+              Answer
+              <input
+                type="text"
+                class="answer block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
+              />
+            </label>
+          </div>
+        </div>
+        <button
+          type="button"
+          id="add-question-btn"
+          class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md "
+        >
+          Add Question
+        </button>
+        <button
+          type="button"
+          id="save-btn"
+          class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md "
+        >
+          Save Questions
+        </button>
+      </form>
+      <h2
+        class="message font-bold text-green-500 text-2xl text-center mt-5"
+      ></h2>
+    </div>
+</div>
+
+
+    <script type="module" src="admin.js">
+     
+  </script>
+  </body>
+</html>
