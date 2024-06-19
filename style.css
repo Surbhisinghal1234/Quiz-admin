@@ -1,0 +1,35 @@
+.wrapper{
+    background: linear-gradient(rgba(0, 0, 0, 0.511),rgba(0, 0, 0, 0.493)), url("./images/img.jpg");
+    height: 100vh;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.box{
+    box-shadow: 1px 1px 2px 2px white;
+}
+.login-image{
+    background: linear-gradient(rgba(0, 0, 0, 0.511),rgba(0, 0, 0, 0.493)), url("./images/img-2.jpg");
+    height: 100vh;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.btn{
+    background: linear-gradient( to right, rgba(255, 0, 0, 0.4), rgba(255, 255, 255, 0.495));
+    padding: 8px 18px;
+    border-radius: 8px;
+    display: flex;
+    margin: auto;
+    font: bold;
+}
+.btn:hover{
+    background-color: blue;
+    color: white;
+    transition: all 0.5ss ease-in-out;
+}
+.quiz{
+    background: linear-gradient(to right,  rgba(165, 42, 42, 0.712), rgba(0, 0, 255, 0.575), rgba(0, 128, 0, 0.658));
+}

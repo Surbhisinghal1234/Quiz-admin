@@ -1,5 +1,4 @@
 
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth, onAuthStateChanged, signOut
@@ -10,12 +9,12 @@ import {
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCKpGfs3z9u7Wi0kCla49ZBotypfr8Vpog",
-  authDomain: "login-form-50c7c.firebaseapp.com",
-  projectId: "login-form-50c7c",
-  storageBucket: "login-form-50c7c.appspot.com",
-  messagingSenderId: "936310140629",
-  appId: "1:936310140629:web:de0f0fc5272059c2af7c5c",
+    apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
@@ -26,9 +25,9 @@ const db = getFirestore();
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User is authenticated, retrieving user ID from local storage...");
+    // console.log("User is authenticated, retrieving user ID from local storage...");
     const loggedInUserId = localStorage.getItem("loggedInUserId");
-    console.log("Logged in User ID from local storage:", loggedInUserId);
+    // console.log("Logged in User ID from local storage:", loggedInUserId);
 
     if (loggedInUserId) {
       const docRef = doc(db, "users", loggedInUserId);
@@ -46,19 +45,19 @@ onAuthStateChanged(auth, (user) => {
             userEmailElement.innerText = userData.email;
             console.log("User data set in DOM elements");
           } else {
-            console.error("DOM elements for user data not found");
+            console.log("DOM elements for user data not found");
           }
         } else {
-          console.error("No document found matching the provided ID:", loggedInUserId);
+          console.log("No document found matching the provided ID:", loggedInUserId);
         }
       }).catch((error) => {
-        console.error("Error getting document:", error);
+        console.log("Error getting document:", error);
       });
     } else {
-      console.error("User ID not found in local storage");
+      console.log("User ID not found in local storage");
     }
   } else {
-    console.error("User is not authenticated");
+    console.log("User is not authenticated");
   }
 });
 
@@ -172,3 +171,5 @@ message.innerHTML = error.message || "Error saving questions";
 }
 });
 
+
+//........................................
