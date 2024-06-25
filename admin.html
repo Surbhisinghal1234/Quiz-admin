@@ -1,133 +1,143 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz</title>
-  <link rel="stylesheet" href="output.css">
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="output.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="quiz">
-     <div  class="flex justify-between px-[4rem]  items-center py-3 ">
-      <h1 class="font-bold text-3xl">Quiz</h1>
-      <div class="flex  gap-[3rem]">
-      <div class="flex flex-col">
-    <h2 class="font-medium" >User Name: <span id="loggedUserName" class="font-medium pl-[.2rem]  "></span></h2>
-    <p class="font-medium">User Email: <span id="loggedUserEmail" class="font-medium pl-[.2rem] "></span></p>
-  </div>
-    <button id="logout" class="bg-blue-500 text-white px-4 py-[4px] mt-3 rounded-md">Logout</button>
-  </div>
-
-  </div>
-  <hr>
-    <div class="flex justify-center items-center py-[3rem]">
-    <div class="w-[40rem] bg-slate-400 p-6 rounded-md shadow-md px-[3rem]">
-      <form id="quiz-form">
-        <label for="level" class="block mt-4 text-sm font-medium text-gray-700">
-          <span class="font-bold ">Select level</span>
-          <select
-            id="level"
-            class="block pl-[8px] w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          >
-            <option disabled selected class="">Select level</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </label>
-        <label
-          for="category"
-          class="block  mt-4 text-sm font-medium text-gray-700"
-        >
-          <span class="font-bold">Select category</span>
-          <select
-            id="category"
-            class="block pl-[8px] w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          >
-            <option disabled selected>Select category</option>
-            <option value="Sports">Sports</option>
-            <option value="Movies">Movies</option>
-            <option value="General">General</option>
-          </select>
-        </label>
-        <div id="questions-container">
-          <div class="questions">
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              <span class="font-bold">Write Question</span>
-              <textarea
-                class="question pl-[8px] pt-[5px] block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                rows="3"
-                placeholder="Write Question..."
-              ></textarea>
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-1
-              <input
-                type="text"
-                class="option1 pl-[8px] block w-full h-10 mt-1 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-2
-              <input
-                type="text"
-                class="option2 pl-[8px] block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-3
-              <input
-                type="text"
-                class="option3 pl-[8px] block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Option-4
-              <input
-                type="text"
-                class="option4 pl-[8px] block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
-            <label class="block mt-4 text-sm font-medium text-gray-700">
-              Answer
-              <input
-                type="text"
-                class="answer pl-[8px] block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm"
-              />
-            </label>
+    <div class="admin-bg-img h-screen">
+      <div class="quiz bg-white border-b border-gray-200 shadow-sm">
+        <div class="flex justify-between px-16 items-center py-3">
+          <h1 class="font-bold text-3xl text-gray-700">Quiz</h1>
+          <div class="flex gap-12">
+            <div class="flex flex-col">
+              <h2 class="font-medium text-gray-600">
+                User Name:
+                <span
+                  id="loggedUserName"
+                  class="font-medium pl-1 text-gray-800"
+                ></span>
+              </h2>
+              <p class="font-medium text-gray-600">
+                User Email:
+                <span
+                  id="loggedUserEmail"
+                  class="font-medium pl-1 text-gray-800"
+                ></span>
+              </p>
+            </div>
+            <button
+              id="logout"
+              class="bg-blue-500 text-white px-4 py-1 mt-3 rounded-md"
+            >
+              Logout
+            </button>
           </div>
         </div>
-        <div class="flex justify-center items-center m-auto gap-[1.5rem]">
-
-       
-        <button
-          type="button"
-          id="add-question-btn"
-          class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md "
-        >
-          Add Question
-        </button>
-        <button
-          type="button"
-          id="save-btn"
-          class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md "
-        >
-          Save Questions
-        </button>
+        <hr />
       </div>
-      </form>
-      <h2
-        class="message font-bold text-green-500 text-2xl text-center mt-5"
-      ></h2>
+
+      <div
+        class="max-w-[50rem] mx-auto p-8 rounded-lg shadow-lg shadow-black mt-[3rem]"
+      >
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Add Questions</h2>
+        <form action="" id="questionForm" class="space-y-6">
+          <div class="question-sec space-y-6">
+            <div class="flex gap-[5.5rem] items-center">
+              <label for="" class="block text-lg font-semibold text-gray-700"
+                >Category</label
+              >
+              <select
+                name="category"
+                class="w-[35rem] p-2 border bg-transparent border-gray-300 rounded select-cat"
+              ></select>
+            </div>
+            <div class="flex gap-[3rem] items-center">
+              <label for="" class="block text-lg font-semibold text-gray-700"
+                >Difficulty level</label
+              >
+              <select
+                name="diffcultyLevel"
+                class="w-[35rem] p-2 border bg-transparent border-gray-300 rounded"
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div class="flex gap-[5.6rem] items-center">
+              <label for="" class="block text-lg font-semibold text-gray-700"
+                >Question</label
+              >
+              <input
+                type="text"
+                name="que"
+                class="bg-transparent w-[35rem] p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div class="space-y-4">
+              <label for="" class="block text-lg font-semibold text-gray-700"
+                >Options</label
+              >
+              <div class="flex gap-[2rem] ml-[10rem]">
+                <input
+                  type="text"
+                  name="options"
+                  class="w-[18rem] bg-transparent p-2 border border-gray-300 rounded mb-2"
+                  placeholder="Option 1"
+                />
+                <input
+                  type="text"
+                  name="options"
+                  class="w-[18rem] bg-transparent p-2 border border-gray-300 rounded mb-2"
+                  placeholder="Option 2"
+                />
+              </div>
+              <div class="flex gap-[2rem] ml-[10rem]">
+                <input
+                  type="text"
+                  name="options"
+                  class="w-[18rem] bg-transparent p-2 border border-gray-300 rounded mb-2"
+                  placeholder="Option 3"
+                />
+                <input
+                  type="text"
+                  name="options"
+                  class="w-[18rem] bg-transparent p-2 border border-gray-300 rounded mb-2"
+                  placeholder="Option 4"
+                />
+              </div>
+            </div>
+            <div class="flex gap-[6.2rem] items-center">
+              <label for="" class="block text-lg font-semibold">Answer</label>
+              <input
+                type="text"
+                name="answer"
+                class="w-[36rem] bg-transparent p-2 border border-gray-300 rounded"
+              />
+            </div>
+          </div>
+          <div class="flex justify-center items-center gap-[2rem]">
+            <button
+              id="addMoreBtn"
+              class="bg-[#ff00004d] text-white px-4 py-2 rounded"
+            >
+              Add More Questions
+            </button>
+            <button
+              id="saveBtn"
+              class="bg-[#ff660070] text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+        <h2 id="message" class="mt-6 text-lg font-semibold"></h2>
+      </div>
     </div>
-</div>
-</div>
-
-
-    <script type="module" src="admin.js">
-     
-  </script>
-  </body>
+    <script src="admin.js" type="module"></script>
+  </body>
 </html>

@@ -33,3 +33,12 @@
 .quiz{
     background: linear-gradient(to right,  rgba(165, 42, 42, 0.712), rgba(0, 0, 255, 0.575), rgba(0, 128, 0, 0.658));
 }
+.admin-bg-img{
+    background: linear-gradient(to right, rgba(165, 42, 42, 0.564),rgba(0, 128, 0, 0.436));
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.admin-bg{
+    background: linear-gradient(to right,rgba(165, 42, 42, 0.381), rgba(0, 255, 255, 0.6), rgba(255, 192, 203, 0.774));
+}

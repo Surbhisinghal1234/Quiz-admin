@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Categories</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body>
+    <div class="flex w-[30rem] flex-col m-auto bg-red-400 px-[2rem] py-[2rem] rounded-md">
+
+    <h2 class="text-2xl font-bold mb-4">Categories</h2>
+    <div id="existingCategories" class="space-y-4 "></div>
+</div>
+
+    <script>
+        async function loadCategories() {
+            const existingCategories = document.getElementById("existingCategories");
+            existingCategories.innerHTML = '';
+            try {
+                const res = await fetch("http://localhost:3000/get_categories/getCategories");
+                const categories = await res.json();
+                categories.forEach(category => {
+                    const categoryDiv = document.createElement("div");
+                    categoryDiv.className = "category-item bg-white p-4 rounded shadow-md flex justify-between items-center";
+                    categoryDiv.dataset.id = category._id;
+                    
+                    const categoryName = document.createElement("span");
+                    categoryName.className = "text-lg";
+                    categoryName.textContent = category.category;
+                    
+                    const buttonContainer = document.createElement("div");
+                    
+                    const deleteButton = document.createElement("button");
+                    deleteButton.className = "bg-red-500 text-white px-4 py-2 rounded mr-2";
+                    deleteButton.textContent = "Delete";
+                    deleteButton.addEventListener("click", () => deleteCategory(category._id));
+                    
+                    const updateButton = document.createElement("button");
+                    updateButton.className = "bg-blue-500 text-white px-4 py-2 rounded";
+                    updateButton.textContent = "Update";
+                    updateButton.addEventListener("click", () => showUpdateInput(categoryDiv, category._id, category.category));
+                    
+                    buttonContainer.appendChild(deleteButton);
+                    buttonContainer.appendChild(updateButton);
+                    
+                    categoryDiv.appendChild(categoryName);
+                    categoryDiv.appendChild(buttonContainer);
+                    
+                    existingCategories.appendChild(categoryDiv);
+                });
+            } catch (err) {
+                console.log("Failed to load categories", err);
+            }
+        }
+
+        async function deleteCategory(id) {
+            try {
+                await fetch(`http://localhost:3000/delete_category/deleteCategory/${id}`, {
+                    method: "DELETE",
+                });
+                loadCategories(); 
+            } catch (err) {
+                console.log("failed", err);
+            }
+        }
+
+        function showUpdateInput(categoryDiv, id, oldCategory) {
+            const categoryName = categoryDiv.querySelector("span");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = oldCategory;
+            input.className = "border border-gray-400 p-2 rounded";
+
+            const saveButton = document.createElement("button");
+            saveButton.className = "bg-green-500 text-white px-4 py-2 rounded ml-2";
+            saveButton.textContent = "Save";
+
+            saveButton.addEventListener("click", async () => {
+                const newCategory = input.value;
+                if (newCategory && newCategory !== oldCategory) {
+                    try {
+                        await fetch(`http://localhost:3000/update_category/updatecategory/${id}`, {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ category: newCategory })
+                        });
+                        categoryName.textContent = newCategory;
+                        input.remove();
+                        saveButton.remove();
+                    } catch (err) {
+                        console.log("failed", err);
+                    }
+                }
+            });
+
+            categoryDiv.appendChild(input);
+            categoryDiv.appendChild(saveButton);
+        }
+
+        window.onload = loadCategories;
+    </script>
+</body>
+</html>
+    

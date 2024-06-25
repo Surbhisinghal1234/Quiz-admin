@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Questions</title>
+    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="admin-bg min-h-screen flex flex-col justify-center items-center">
+    <h2 class="font-bold text-3xl mb-6">All Questions</h2>
+
+    <div class="w-[40rem] mx-auto p-8 rounded-lg shadow-lg shadow-gray-600">
+        <div class="mb-4">
+            <label for="category" class="block mb-2 font-semibold">Category</label>
+            <select id="category" class="w-full p-2 border bg-transparent border-slate-700 rounded"></select>
+        </div>
+        <div class="mb-4">
+            <label for="difficulty" class="block mb-2 font-semibold">Difficulty Level</label>
+            <select id="difficulty" class="w-full p-2 border bg-transparent border-slate-700 rounded">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <button id="getBtn" class="bg-orange-500 text-white px-4 py-2 rounded">Get Questions</button>
+
+        <div id="allQuestions" class="mt-8"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const categorySelect = document.getElementById('category');
+        try {
+            const res = await fetch('http://localhost:3000/get_categories/getCategories');
+            const categories = await res.json();
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.category;
+                option.textContent = category.category;
+                option.classList.add('bg-transparent', 'text-blue-500');
+            
+
+                categorySelect.appendChild(option);
+            });
+        } catch (err) {
+            console.log("error", err);
+        }
+
+        document.getElementById('getBtn').addEventListener('click', async () => {
+            const category = categorySelect.value;
+            const difficulty = document.getElementById('difficulty').value;
+            try {
+                const url = `http://localhost:3000/get_questions/getQuestions?difficultyLevel=${difficulty}&category=${category}`;
+                const response = await fetch(url);
+                const questions = await response.json();
+                const allQuestions = document.getElementById('allQuestions');
+
+                allQuestions.innerHTML = ''; 
+
+                questions.forEach((question, index) => {
+                    const questionElement = document.createElement('div');
+                    questionElement.classList.add('mb-4');
+                    questionElement.innerHTML = `
+                        <h3 class="font-semibold text-lg">Q.${index + 1}   ${question.que}</h3>
+                        <form id="form-${index}" class="mt-2">
+                            ${question.options.map((option, i) => `
+                                <div class="flex items-center">
+                                    <label for="option${index}" class="select-none">${option}</label>
+                                </div>
+                            `).join('')}
+                                <p id="answer-${index}" class="mt-2 font-semibold">Correct Answer: ${question.answer}</p>
+                        </form>
+                    `;
+                    allQuestions.appendChild(questionElement);
+                });
+
+            } catch (err) {
+                console.log("error", err);
+            }
+        });
+
+ 
+    })
+  </script>
+</body>
+</html>

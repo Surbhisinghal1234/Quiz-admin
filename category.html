@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Categort</title>
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body>
+    <div class="w-[25rem] bg-red-200 m-auto p-5 rounded-md mt-[5rem]">
+      <form
+        action=""
+        id="categoryForm"
+        class="flex justify-center items-center gap-[1rem] flex-col"
+      >
+        <h2 class="font-bold text-2xl">Add Categories</h2>
+        <div
+          id="categories"
+          class="flex gap-[1rem] flex-col justify-center items-center"
+        >
+          <div class="category-sec">
+            <label for="" class="font-medium">Category</label>
+            <input
+              type="text"
+              class="category-inp bg-transparent border-2 rounded-md"
+            />
+          </div>
+        </div>
+        <div class="flex gap-[1rem]">
+          <button
+            id="addMoreBtn"
+            class="bg-green-300 px-2 py-1 rounded-md font-medium"
+          >
+            Add More Categories
+          </button>
+          <button
+            id="saveBtn"
+            class="bg-green-700 px-2 py-1 rounded-md text-white"
+          >
+            Save
+          </button>
+          <h2 id="message"></h2>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const addMoreBtn = document.getElementById("addMoreBtn");
+      addMoreBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const categories = document.getElementById("categories");
+        const category_sec = document.querySelectorAll(".category-sec").length;
+        const newCategory_sec = document.createElement("div");
+        newCategory_sec.className = "category-sec mb-6";
+        newCategory_sec.innerHTML = `<input type="text" class="category-inp bg-transparent border-2 rounded-md">`;
+        categories.appendChild(newCategory_sec);
+      });
+
+      const saveBtn = document.getElementById("saveBtn");
+      saveBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        let message = document.getElementById("message");
+        const categories = [];
+        const categoryInputs = document.querySelectorAll(".category-inp");
+        categoryInputs.forEach((input) => {
+          if (input.value) {
+            categories.push({ category: input.value });
+          }
+        });
+
+        try {
+          const res = await fetch(
+            "http://localhost:3000/add_category/addCategory",
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({ categories }),
+            }
+          );
+          const result = await res.json();
+          console.log(result, "result");
+          message.innerText = "category added sucessfully";
+        } catch (err) {
+          console.log("Failed to add categories", err);
+          message.innerText = "Failed to add categories";
+        }
+      });
+    </script>
+  </body>
+</html>

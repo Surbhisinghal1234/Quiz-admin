@@ -9,12 +9,18 @@ import {
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
+//     apiKey: process.env.FIREBASE_API_KEY,
+//   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.FIREBASE_APP_ID,
+  apiKey: "AIzaSyCKpGfs3z9u7Wi0kCla49ZBotypfr8Vpog",
+  authDomain: "login-form-50c7c.firebaseapp.com",
+  projectId: "login-form-50c7c",
+  storageBucket: "login-form-50c7c.appspot.com",
+  messagingSenderId: "936310140629",
+  appId: "1:936310140629:web:de0f0fc5272059c2af7c5c",
 };
 
 // Initialize Firebase
@@ -76,100 +82,86 @@ if (logOutButton) {
   console.error("Logout button not found");
 }
 
-//.............................. 
-document
-.getElementById("add-question-btn")
-.addEventListener("click", function () {
-  const newQuestionDiv = document.createElement("div");
-  newQuestionDiv.className = "questions mt-4";
-  newQuestionDiv.innerHTML = `
-<label class="block text-sm font-medium text-gray-700">
-<span class="font-bold">Write Question</span>
-<textarea class="question block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="4" placeholder="Write Question..."></textarea>
-</label>
-<label class="block mt-4 text-sm font-medium text-gray-700">
-Option-1
-<input type="text" class="option1 block w-full h-10 mt-1 border border-gray-300 rounded-md shadow-sm">
-</label>
-<label class="block mt-4 text-sm font-medium text-gray-700">
-Option-2
-<input type="text" class="option2 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-</label>
-<label class="block mt-4 text-sm font-medium text-gray-700">
-Option-3
-<input type="text" class="option3 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-</label>
-<label class="block mt-4 text-sm font-medium text-gray-700">
-Option-4
-<input type="text" class="option4 block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-</label>
-<label class="block mt-4 text-sm font-medium text-gray-700">
-Answer
-<input type="text" class="answer block w-full mt-1 h-10 border border-gray-300 rounded-md shadow-sm">
-</label>
-`;
-  document
-    .getElementById("questions-container")
-    .appendChild(newQuestionDiv);
+// //.............................. 
+document.addEventListener("DOMContentLoaded", async () => {
+  await fetchCategories();
+
+  const addMoreBtn = document.getElementById("addMoreBtn");
+  addMoreBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const questionSec = document.querySelector(".question-sec");
+    const newQuestionSec = questionSec.cloneNode(true);
+
+    const inputs = newQuestionSec.querySelectorAll("input");
+    inputs.forEach((input) => {
+      input.value = "";
+    });
+
+    document
+      .getElementById("questionForm")
+      .insertBefore(newQuestionSec, document.getElementById("addMoreBtn"));
+  });
+
+  const saveBtn = document.getElementById("saveBtn");
+  saveBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    let message = document.getElementById("message");
+    const questions = [];
+    const questionSections = document.querySelectorAll(".question-sec");
+    questionSections.forEach((section) => {
+      const category = section.querySelector('select[name="category"]').value;
+      const difficultyLevel = section.querySelector('select[name="diffcultyLevel"]').value;
+      const que = section.querySelector('input[name="que"]').value;
+      const options = Array.from(section.querySelectorAll('input[name="options"]')).map((input) => input.value);
+      const answer = section.querySelector('input[name="answer"]').value;
+      if (category && difficultyLevel && que && options.length && answer) {
+        questions.push({
+          category,
+          difficultyLevel,
+          que,
+          options,
+          answer,
+        });
+      }
+    });
+
+    try {
+      const res = await fetch(
+        "http://localhost:3000/questions/addQuestions",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ questions }),
+        }
+      );
+      const result = await res.json();
+      console.log(result, "result");
+      message.textContent = "Questions added successfully";
+    } catch (err) {
+      console.log("failed", err);
+      message.textContent = "Failed to add questions";
+    }
+  });
 });
 
-
-document.getElementById("save-btn").addEventListener("click", async function () {
-const questionsDivs = document.querySelectorAll(".questions");
-const questions = [];
-const level = document.getElementById("level").value;
-const category = document.getElementById("category").value;
-const message = document.querySelector(".message");
-
-console.log("Level:", level);
-console.log("Category:", category);
-
-questionsDivs.forEach((div) => {
-const questionText = div.querySelector(".question").value;
-const option1 = div.querySelector(".option1").value;
-const option2 = div.querySelector(".option2").value;
-const option3 = div.querySelector(".option3").value;
-const option4 = div.querySelector(".option4").value;
-const answer = div.querySelector(".answer").value;
-
-const question = {
-    que: questionText,
-    options: [option1, option2, option3, option4],
-    answer: answer,
-};
-
-questions.push(question);
-});
-
-console.log("Questions:", questions);
-
-try {
-const response = await fetch("http://localhost:3000/questions/addQuestions", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        category: category,
-        difficultyLevel: level,
-        questions: questions,
-    }),
-});
-
-if (!response.ok) {
-    console.log("Failed to save questions");
-    message.innerHTML = "Failed to save questions";
-    return;
+async function fetchCategories() {
+  try {
+    const res = await fetch(
+      "http://localhost:3000/get_categories/getCategories"
+    );
+    const categories = await res.json();
+    const categoryAll = document.querySelectorAll(".select-cat");
+    categoryAll.forEach((select) => {
+      categories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.category; 
+        option.textContent = category.category;
+        select.appendChild(option);
+      });
+    });
+  } catch (err) {
+    console.log("failed", err);
+  }
 }
 
-const data = await response.json();
-console.log("Response", data);
-message.innerHTML = "Questions saved successfully!";
-} catch (error) {
-console.error("Error:", error);
-message.innerHTML = error.message || "Error saving questions";
-}
-});
 
-
-//........................................
